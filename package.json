@@ -1,14 +1,14 @@
 {
-  "name": "skeleton",
+  "name": "io-game",
   "version": "1.0.0",
-  "description": "This is a simple app to get you started. Change the description as needed.",
+  "description": "The starting place for an io game",
   "main": "app.js",
   "scripts": {
     "start": "node ./app.js",
     "live": "nodemon ./app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Your Name Here",
+  "author": "AJ",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
