@@ -1,4 +1,47 @@
 extends layout
 
 block content
-  h1 Welcome to My Website
+  link(rel='stylesheet', href='/stylesheets/gameClient.css')
+  //- images for the players
+  img(hidden id="stickman" width="80" height="100" src="/images/stickman.png" alt="Stickman")
+  img(hidden id="rock" width="80" height="100" src="/images/rock.png" alt="rock")
+  img(hidden id="paper" width="80" height="100" src="/images/paper.png" alt="paper")
+  img(hidden id="scizzors" width="80" height="100" src="/images/scizzors.png" alt="scizzors")
+  img(hidden id="question" width="80" height="100" src="/images/question.png" alt="question")
+  script(src="/socket.io/socket.io.js")
+    var socket = io();
+  .container
+    h1(id="title").text-center RoshamIO
+    .modal.fade(id="nameModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true")
+      .modal-dialog
+        .modal-content
+          .modal-header
+            h5.modal-title Please enter a name:
+            button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+              span(aria-hidden="true") &times;
+          .modal-body
+            label(for="recipient-name" class="col-form-label") Name:
+            input(id="nameInput" type="text" class="form-control")
+          .modal-footer
+            button(type="button" class="btn btn-secondary" data-dismiss="modal") Close
+            button(id="nameBtn" type="button" class="btn btn-primary" data-dismiss="modal") Submit
+    table(id="content")
+      tbody
+        tr
+          th
+            .card
+              .card-header
+                h3.text-center Leaderboard
+              .card-body
+                ol(id="leaderboard")
+          th
+            canvas(id="canvas")
+          th
+            .card
+              .card-header
+                h3.text-center Chat
+              .card-body
+                p Lorum ipsum
+    .card
+      button(type="button" class="btn btn-primary" data-toggle="modal" data-target="#nameModal") Start as a new character
+  script(src="/javascripts/clientGame.js")
