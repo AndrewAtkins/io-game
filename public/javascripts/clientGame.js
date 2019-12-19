@@ -9,7 +9,7 @@ var defaultMovement = {
 var movement = defaultMovement;
 
 /* Play song */
-let myAudio = new Audio('/sounds/roshambanger.wav');
+let myAudio = document.getElementById("song");
 if(myAudio) {
   myAudio.addEventListener('ended', function () {
     this.currentTime = 0;
