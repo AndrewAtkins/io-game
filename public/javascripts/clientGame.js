@@ -119,6 +119,7 @@ socket.on('state', function (state) {
     var message = messages[i].message;
     var entry = document.createElement('li');
     entry.className = "list-group-item";
+    entry.setAttribute("style","word-wrap: break-word;");
     entry.appendChild(document.createTextNode(name + ": " + message));
     chat.appendChild(entry);
   }
