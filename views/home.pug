@@ -25,11 +25,11 @@ block content
           .modal-footer
             button(type="button" class="btn btn-secondary" data-dismiss="modal") Close
             button(id="nameBtn" type="button" class="btn btn-primary" data-dismiss="modal") Submit
-    table(id="content")
+    table(id="content" style="table-layout:fixed;")
       tbody
         tr
           th
-            .card
+            .card(style="height:500px")
               .card-header
                 h3.text-center Leaderboard
               .card-body
@@ -37,11 +37,15 @@ block content
           th
             canvas(id="canvas")
           th
-            .card
+            .card(style="height:500px")
               .card-header
                 h3.text-center Chat
-              .card-body
-                p Lorum ipsum
+              .card-body.d-flex.flex-column.mt-auto
+                ul(id="chat").list-group
+                .input-group.mb-3
+                  input(id="chatInput" type="text" class="form-control" style="width:100px; min-width:38%; max-width:100%;")
+                  .input-group-append
+                    button(id="chatSubmit" type="button" class="btn btn-outline-secondary") Send
     .card
       button(type="button" class="btn btn-primary" data-toggle="modal" data-target="#nameModal") Start as a new character
   script(src="/javascripts/clientGame.js")

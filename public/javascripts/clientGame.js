@@ -15,11 +15,20 @@ $(window).on('load',function(){
 $('#nameBtn').click(function() {
   name = $('#nameInput').val();
   createNewPlayer();
-})
-// do {
-//   var name = prompt('Enter a username (must be greater than 0 characters and less than 10');
-// } while (name == null || name.length < 1 || name.length > 10);
+});
 
+/* Chat Box*/
+$('#chatSubmit').click(function() {
+  let message = $('#chatInput').val();
+  $('#chatInput').val('');
+  if(message && message.length > 0) {
+    socket.emit('message', {
+      name: name,
+      time: (new Date()).getTime(),
+      message: message
+    });
+  }
+});
 // read players movement and send it to the server
 document.addEventListener('keydown', function (event) {
   switch (event.keyCode) {
@@ -88,7 +97,21 @@ socket.on('state', function (state) {
   let players = state.players;
   let questions = state.questions;
   let stateLeaderboard = state.leaderboard;
+  let messages = state.messages;
   context.clearRect(0, 0, 800, 600);
+  /* Update messages */
+  let chat = document.getElementById('chat');
+  while (chat.firstChild) {
+    chat.removeChild(chat.firstChild);
+  }
+  for (let i = 0; i < messages.length; i++) {
+    var name = messages[i].name;
+    var message = messages[i].message;
+    var entry = document.createElement('li');
+    entry.className = "list-group-item";
+    entry.appendChild(document.createTextNode(name + ": " + message));
+    chat.appendChild(entry);
+  }
   // draw question marks
   for (id in questions) {
     let img = document.getElementById("question");
@@ -127,7 +150,6 @@ socket.on('state', function (state) {
     context.fillText("Score: " + scoreText, canvas.width - 150, 60); // we get the player here
   }
   // update the client side leaderboard
-  let leaderBoardString = "";
   let leaderboard = document.getElementById('leaderboard');
   while (leaderboard.firstChild) {
     leaderboard.removeChild(leaderboard.firstChild);
