@@ -7,21 +7,31 @@ var defaultMovement = {
   right: false
 };
 var movement = defaultMovement;
+
+/* Play song */
+let myAudio = new Audio('/sounds/roshambanger.wav');
+if(myAudio) {
+  myAudio.addEventListener('ended', function () {
+    this.currentTime = 0;
+    this.play();
+  }, false);
+  myAudio.play();
+}
 /* Dialog box to get users name */
-$(window).on('load',function(){
+$(window).on('load', function () {
   $('#nameModal').modal('show');
 });
 
-$('#nameBtn').click(function() {
+$('#nameBtn').click(function () {
   name = $('#nameInput').val();
   createNewPlayer();
 });
 
 /* Chat Box*/
-$('#chatSubmit').click(function() {
+$('#chatSubmit').click(function () {
   let message = $('#chatInput').val();
   $('#chatInput').val('');
-  if(message && message.length > 0) {
+  if (message && message.length > 0) {
     socket.emit('message', {
       name: name,
       time: (new Date()).getTime(),
@@ -62,7 +72,7 @@ document.addEventListener('keyup', function (event) {
       break;
   }
 });
-let createNewPlayer = function() {
+let createNewPlayer = function () {
   // notify once that a new player has joined
   // get what type of player spawns in
   let typeNum = Math.floor(Math.random() * 3) + 1;
@@ -74,7 +84,7 @@ let createNewPlayer = function() {
   } else if (typeNum == 3) {
     type = "scizzors";
   }
-  if(name) {
+  if (name) {
     socket.emit('new player', {
       name: name,
       type: type,

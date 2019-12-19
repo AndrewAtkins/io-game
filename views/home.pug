@@ -29,7 +29,7 @@ block content
       tbody
         tr
           th
-            .card(style="height:500px")
+            .card(style="height:600px")
               .card-header
                 h3.text-center Leaderboard
               .card-body
@@ -37,11 +37,11 @@ block content
           th
             canvas(id="canvas")
           th
-            .card(style="height:500px")
+            .card(style="")
               .card-header
                 h3.text-center Chat
               .card-body.d-flex.flex-column.mt-auto
-                ul(id="chat").list-group
+                ul(id="chat" style="height:490px;overflow-y:auto;").list-group
                 .input-group.mb-3
                   input(id="chatInput" type="text" class="form-control" style="width:100px; min-width:38%; max-width:100%;")
                   .input-group-append
