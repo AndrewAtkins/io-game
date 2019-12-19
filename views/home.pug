@@ -11,42 +11,51 @@ block content
   audio(hidden muted id="song" src="/sounds/roshambanger.wav" type="audio/wav")
   script(src="/socket.io/socket.io.js")
     var socket = io();
-  .container
-    h1(id="title").text-center RoshamIO
-    .modal.fade(id="nameModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true")
-      .modal-dialog
-        .modal-content
-          .modal-header
-            h5.modal-title Please enter a name:
-            button(type="button" class="close" data-dismiss="modal" aria-label="Close")
-              span(aria-hidden="true") &times;
-          .modal-body
-            label(for="recipient-name" class="col-form-label") Name:
-            input(id="nameInput" type="text" class="form-control")
-          .modal-footer
-            button(type="button" class="btn btn-secondary" data-dismiss="modal") Close
-            button(id="nameBtn" type="button" class="btn btn-primary" data-dismiss="modal") Submit
-    table(id="content" style="table-layout:fixed;")
-      tbody
-        tr
-          th
-            .card(style="height:600px")
-              .card-header
-                h3.text-center Leaderboard
-              .card-body
-                ol(id="leaderboard")
-          th
-            canvas(id="canvas")
-          th
-            .card(style="")
-              .card-header
-                h3.text-center Chat
-              .card-body.d-flex.flex-column.mt-auto
-                ul(id="chat" style="height:490px;overflow-y:auto;").list-group
-                .input-group.mb-3
-                  input(id="chatInput" type="text" class="form-control" style="width:100px; min-width:38%; max-width:100%;")
-                  .input-group-append
-                    button(id="chatSubmit" type="button" class="btn btn-outline-secondary") Send
-    .card
-      button(type="button" class="btn btn-primary" data-toggle="modal" data-target="#nameModal") Start as a new character
+  .modal.fade(id="nameModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true")
+    .modal-dialog
+      .modal-content
+        .modal-header
+          h5.modal-title Please enter a name:
+          button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+            span(aria-hidden="true") &times;
+        .modal-body
+          label(for="recipient-name" class="col-form-label") Name:
+          input(id="nameInput" type="text" class="form-control")
+        .modal-footer
+          button(type="button" class="btn btn-secondary" data-dismiss="modal") Close
+          button(id="nameBtn" type="button" class="btn btn-primary" data-dismiss="modal") Submit
+  table(id="content" style="margin-left:auto;margin-right:auto;")
+    tbody
+      tr
+        th
+        th
+          .d-flex.justify-content-center
+            h1(id="title").text-center RoshamIO
+        th
+      tr
+        th
+          .card(style="height:600px")
+            .card-header
+              h3.text-center Leaderboard
+            .card-body
+              ol(id="leaderboard")
+        th
+          canvas(id="canvas")
+        th
+          .card(style="")
+            .card-header
+              h3.text-center Chat
+            .card-body.d-flex.flex-column.mt-auto
+              ul(id="chat" style="height:490px;overflow-y:auto;").list-group
+              .input-group.mb-3
+                input(id="chatInput" type="text" class="form-control" style="width:100px; min-width:38%; max-width:100%;")
+                .input-group-append
+                  button(id="chatSubmit" type="button" class="btn btn-outline-secondary") Send
+      tr
+        th
+        th
+          .justify-content-center 
+            .card
+              button(type="button" class="btn btn-primary" data-toggle="modal" data-target="#nameModal") Start as a new character
+        th
   script(src="/javascripts/clientGame.js")
