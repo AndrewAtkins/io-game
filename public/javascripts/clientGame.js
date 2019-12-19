@@ -16,6 +16,7 @@ if(myAudio) {
     this.play();
   }, false);
   myAudio.play();
+  document.getElementById("song").muted = false;
 }
 /* Dialog box to get users name */
 $(window).on('load', function () {
