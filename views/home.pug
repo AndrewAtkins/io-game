@@ -87,7 +87,8 @@ block content
             .card-header
               h3.text-center Chat
             .card-body.d-flex.flex-column.mt-auto
-              ul(id="chat" style="height:490px;overflow-y:auto;").list-group
+              ul(id="chat" style="height:480px;width:200px;overflow-y:auto;").list-group
+                li.list-group-item(style="word-wrap: break-word;color:blue;") Welcome to RoshamIO. Desktop players use WASD to move. Mobile players touch on the play area.
               .input-group.mb-3
                 input(id="chatInput" type="text" class="form-control" style="width:100px; min-width:38%; max-width:100%;")
                 .input-group-append
@@ -95,13 +96,12 @@ block content
       tr
         th
           .justify-content-center
-            .card
-              .card-body
-                button(id="keyboard" type="button" class="btn btn-secondary" style="width:50%").text-center Keyboard
-                button.btn.btn-success.fa.text-center(id="musicButton" type="button" style="width:50%;height:100%") &#xf026;
+            .card(style="display: inline-block;width:100%")
+              button(id="keyboard" type="button" class="btn btn-secondary" style="width:50%;").text-center Keyboard
+              button.btn.btn-success.fa.text-center(id="musicButton" type="button" style="width:50%;height:100%") &#xf026;
+        th
         th
           .justify-content-center 
             .card
               button(type="button" class="btn btn-primary" data-toggle="modal" data-target="#nameModal") Start as a new character
-        th
   script(src="/javascripts/clientGame.js")

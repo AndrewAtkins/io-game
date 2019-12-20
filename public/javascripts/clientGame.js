@@ -29,7 +29,7 @@ $('#chatSubmit').click(function () {
   if (message && message.length > 0) {
     socket.emit('message', {
       name: name,
-      time: (new Date()).getTime(),
+      date: (new Date()),
       message: message
     });
   }
@@ -37,9 +37,8 @@ $('#chatSubmit').click(function () {
 $(document).ready(function () {
   /* Play song */
   let myAudio = document.getElementById("song");
-  let musicButton = document.getElementById("musicButton");
   $('#musicButton').click(() => {
-    if(myAudio.muted || myAudio.paused) {
+    if (myAudio.muted || myAudio.paused) {
       myAudio.play();
       myAudio.paused = false;
       document.getElementById("song").muted = false;
@@ -284,6 +283,7 @@ let touchDown = (e) => {
 canvas.addEventListener("touchstart", touchDown);
 canvas.addEventListener("touchmove", touchDown);
 
+
 /* Code to run everytime the server emits the state */
 socket.on('state', function (state) {
   let players = state.players;
@@ -293,9 +293,10 @@ socket.on('state', function (state) {
   context.clearRect(0, 0, 800, 600);
   /* Update messages */
   let chat = document.getElementById('chat');
-  while (chat.firstChild) {
-    chat.removeChild(chat.firstChild);
-  }
+  // while (chat.firstChild) {
+  //   chat.removeChild(chat.firstChild);
+  // }
+  $('#chat li:not(:first-child)').remove();
   for (let i = 0; i < messages.length; i++) {
     var name = messages[i].name;
     var message = messages[i].message;
