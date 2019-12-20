@@ -67,7 +67,7 @@ let setAllMovementsFalse = () => {
 $("#upKey,#downKey,#leftKey,#rightKey,#upLeftKey,#upRightKey,#downLeftKey,#downRightKey").on("mouseup mouseout", function (e) {
   setAllMovementsFalse();
 });
-$("#upKey,#downKey,#leftKey,#rightKey,#upLeftKey,#upRightKey,#downLeftKey,#downRightKey").on("touchend touchcancel", function (e) {
+$("#upKey,#downKey,#leftKey,#rightKey,#upLeftKey,#upRightKey,#downLeftKey,#downRightKey").on("touchend", function (e) {
   setAllMovementsFalse();
 });
 // up
