@@ -65,42 +65,42 @@ block content
                 th
                   .d-flex.justify-content-center.noselect
                     button(id="downRightKey").btn.btn-secondary.btn-lg ↘
-  table(id="content" style="margin-left:auto;margin-right:auto;")
+  table(id="content" class="table" style="margin-left:auto;margin-right:auto;")
     tbody
       tr
-        th
-        th
+        td
+        td
           .d-flex.justify-content-center
             h1(id="title").text-center RoshamIO
-        th
+        td
       tr
-        th
+        td(style="width:20%")
           .card(style="height:600px")
             .card-header
               h3.text-center Leaderboard
             .card-body
               ol(id="leaderboard")
-        th
+        td(style="width:20%")
           canvas(id="canvas")
-        th
+        td(style="width:20%")
           .card(style="")
             .card-header
               h3.text-center Chat
             .card-body.d-flex.flex-column.mt-auto
-              ul(id="chat" style="height:480px;width:300px;overflow-y:auto;").list-group
+              ul(id="chat" style="height:480px;width:100%;overflow-y:auto;").list-group
                 li.list-group-item(style="word-wrap: break-word;") Welcome to <mark style="color:blue;background:yellow;"> RoshamIO.</mark> Desktop players use <mark style="color:blue;background:none;">WASD</mark> to move. Mobile players <mark style="color:blue;background:none;">touch</mark> on the play area.<br /> This is a multiplayer game, so if you're the only one playing grab a buddy.
               .input-group.mb-3
                 input(id="chatInput" type="text" class="form-control" style="width:100px; min-width:38%; max-width:100%;")
                 .input-group-append
                   button(id="chatSubmit" type="button" class="btn btn-outline") Send
       tr
-        th
+        td
           .justify-content-center
             .card(style="display: inline-block;width:100%")
               button(id="keyboard" type="button" class="btn btn-secondary" style="width:50%;").text-center Keyboard
               button.btn.btn-success.fa.text-center(id="musicButton" type="button" style="width:50%;height:100%") &#xf026;
-        th
-        th
+        td
+        td
           .justify-content-center 
             .card
               button(type="button" class="btn btn-primary" data-toggle="modal" data-target="#nameModal") Start as a new character
