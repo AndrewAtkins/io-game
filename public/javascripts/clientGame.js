@@ -37,12 +37,23 @@ $('#chatSubmit').click(function () {
 $(document).ready(function () {
   /* Play song */
   let myAudio = document.getElementById("song");
+  let musicButton = document.getElementById("musicButton");
+  $('#musicButton').click(() => {
+    if(myAudio.muted || myAudio.paused) {
+      myAudio.play();
+      myAudio.paused = false;
+      document.getElementById("song").muted = false;
+      $('#musicButton').html('&#xf028;');
+    } else {
+      myAudio.paused = true;
+      document.getElementById("song").muted = true;
+      $('#musicButton').html('&#xf026;');
+    }
+  });
   myAudio.addEventListener('ended', function () {
     this.currentTime = 0;
     this.play();
   }, false);
-  myAudio.play();
-  document.getElementById("song").muted = false;
   /* On screen keyboard */
   $('#keyboard').click(function () {
     if (!($('.modal.in').length)) {
@@ -223,11 +234,11 @@ let createNewPlayer = function () {
 setInterval(function () {
   if (moveX && moveY) {
     if (Math.abs(myY - moveY) > 5) {
-      
+
       if ((myY - moveY) > 0) { // where I am minus where I touched
         movement.up = true;
         movement.down = false;
-      }  else if ((myY - moveY) < 0) {
+      } else if ((myY - moveY) < 0) {
         movement.down = true;
         movement.up = false;
       }
@@ -237,11 +248,11 @@ setInterval(function () {
       movement.down = false;
     }
     if (Math.abs(myX - moveX) > 5) {
-      
+
       if ((myX - moveX) > 0) { // where I am minus where I touched
         movement.left = true;
         movement.right = false;
-      }  else if ((myX - moveX) < 0) {
+      } else if ((myX - moveX) < 0) {
         movement.right = true;
         movement.left = false;
       }
@@ -267,7 +278,6 @@ let touchDown = (e) => {
     const rect = canvas.getBoundingClientRect();
     moveX = e.touches[0].clientX - rect.left - playerWidth;
     moveY = e.touches[0].clientY - rect.top - playerHeight;
-    console.log("Touch: " + " x: " + moveX + ", y: " + moveY);
     e.preventDefault();
   }
 }
