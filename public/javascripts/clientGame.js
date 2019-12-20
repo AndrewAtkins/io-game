@@ -8,16 +8,6 @@ var defaultMovement = {
 };
 var movement = defaultMovement;
 
-/* Play song */
-let myAudio = document.getElementById("song");
-if(myAudio) {
-  myAudio.addEventListener('ended', function () {
-    this.currentTime = 0;
-    this.play();
-  }, false);
-  myAudio.play();
-  document.getElementById("song").muted = false;
-}
 /* Dialog box to get users name */
 $(window).on('load', function () {
   $('#nameModal').modal('show');
@@ -40,37 +30,169 @@ $('#chatSubmit').click(function () {
     });
   }
 });
+$(document).ready(function () {
+  /* Play song */
+  let myAudio = document.getElementById("song");
+  myAudio.addEventListener('ended', function () {
+    this.currentTime = 0;
+    this.play();
+  }, false);
+  myAudio.play();
+  document.getElementById("song").muted = false;
+  /* On screen keyboard */
+  $('#keyboard').click(function () {
+    if (!($('.modal.in').length)) {
+      $('#keyboardModalDialog').css({
+        top: 0,
+        left: 0
+      });
+    }
+    $('#keyboardModal').modal({
+      backdrop: false,
+      show: true
+    });
+
+    $('#keyboardModalDialog').draggable({
+      handle: ".modal-header"
+    });
+  });
+})
+let setAllMovementsFalse = () => {
+  movement.up = false;
+  movement.down = false;
+  movement.left = false;
+  movement.right = false;
+};
+/* Movment using onscreen keyboard */
+$("#upKey,#downKey,#leftKey,#rightKey,#upLeftKey,#upRightKey,#downLeftKey,#downRightKey").on("mouseup mouseout", function (e) {
+  setAllMovementsFalse();
+});
+$("#upKey,#downKey,#leftKey,#rightKey,#upLeftKey,#upRightKey,#downLeftKey,#downRightKey").on("touchend touchcancel", function (e) {
+  setAllMovementsFalse();
+});
+// up
+$("#upKey").on("mousedown mouseover", function (e) {
+  if (e.buttons == 1 || e.buttons == 3) {
+    movement.up = true;
+  }
+});
+// upkey for touch devices
+$("#upKey").on("touchstart", function () {
+  movement.up = true;
+});
+// up left
+$("#upLeftKey").on("mousedown mouseover", function (e) {
+  if (e.buttons == 1 || e.buttons == 3) {
+    movement.up = true;
+    movement.left = true;
+  }
+});
+// upLeftKey for touch devices
+$("#upLeftKey").on("touchstart", function () {
+  movement.up = true;
+  movement.left = true;
+});
+// up right
+$("#upRightKey").on("mousedown mouseover", function (e) {
+  if (e.buttons == 1 || e.buttons == 3) {
+    movement.up = true;
+    movement.right = true;
+  }
+});
+// upRightKey for touch devices
+$("#upRightKey").on("touchstart", function () {
+  movement.up = true;
+  movement.right = true;
+});
+// left
+$("#leftKey").on("mousedown mouseover", function (e) {
+  if (e.buttons == 1 || e.buttons == 3) {
+    movement.left = true;
+  }
+});
+// leftKey for touch devices
+$("#leftKey").on("touchstart", function () {
+  movement.left = true;
+});
+// right
+$("#rightKey").on("mousedown mouseover", function (e) {
+  if (e.buttons == 1 || e.buttons == 3) {
+    movement.right = true;
+  }
+});
+// right key for touch devices
+$("#rightKey").on("touchstart", function () {
+  movement.right = true;
+});
+// // down left
+$("#downLeftKey").on("mousedown mouseover", function (e) {
+  if (e.buttons == 1 || e.buttons == 3) {
+    movement.down = true;
+    movement.left = true;
+  }
+});
+// downleft key for touch devices
+$("#downLeftKey").on("touchstart", function () {
+  movement.down = true;
+  movement.left = true;
+});
+// down
+$("#downKey").on("mousedown mouseover", function (e) {
+  if (e.buttons == 1 || e.buttons == 3) {
+    movement.down = true;
+  }
+});
+// upkey for touch devices
+$("#downKey").on("touchstart", function () {
+  movement.down = true;
+});
+// down right
+$("#downRightKey").on("mousedown mouseover", function (e) {
+  if (e.buttons == 1 || e.buttons == 3) {
+    movement.down = true;
+    movement.right = true;
+  }
+});
+// down right key for touch devices
+$("#downRightKey").on("touchstart", function () {
+  movement.down = true;
+  movement.right = true;
+});
 // read players movement and send it to the server
 document.addEventListener('keydown', function (event) {
-  switch (event.keyCode) {
-    case 65: // A
-      movement.left = true;
-      break;
-    case 87: // W
-      movement.up = true;
-      break;
-    case 68: // D
-      movement.right = true;
-      break;
-    case 83: // S
-      movement.down = true;
-      break;
+  if (!$('#keyboardModal').is(':visible')) {
+    switch (event.keyCode) {
+      case 65: // A
+        movement.left = true;
+        break;
+      case 87: // W
+        movement.up = true;
+        break;
+      case 68: // D
+        movement.right = true;
+        break;
+      case 83: // S
+        movement.down = true;
+        break;
+    }
   }
 });
 document.addEventListener('keyup', function (event) {
-  switch (event.keyCode) {
-    case 65: // A
-      movement.left = false;
-      break;
-    case 87: // W
-      movement.up = false;
-      break;
-    case 68: // D
-      movement.right = false;
-      break;
-    case 83: // S
-      movement.down = false;
-      break;
+  if (!$('#keyboardModal').is(':visible')) {
+    switch (event.keyCode) {
+      case 65: // A
+        movement.left = false;
+        break;
+      case 87: // W
+        movement.up = false;
+        break;
+      case 68: // D
+        movement.right = false;
+        break;
+      case 83: // S
+        movement.down = false;
+        break;
+    }
   }
 });
 let createNewPlayer = function () {
@@ -120,7 +242,7 @@ socket.on('state', function (state) {
     var message = messages[i].message;
     var entry = document.createElement('li');
     entry.className = "list-group-item";
-    entry.setAttribute("style","word-wrap: break-word;");
+    entry.setAttribute("style", "word-wrap: break-word;");
     entry.appendChild(document.createTextNode(name + ": " + message));
     chat.appendChild(entry);
   }

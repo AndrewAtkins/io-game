@@ -11,6 +11,7 @@ block content
   audio(hidden muted id="song" src="/sounds/roshambanger.wav" type="audio/wav")
   script(src="/socket.io/socket.io.js")
     var socket = io();
+  //- Modal for entering your name
   .modal.fade(id="nameModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true")
     .modal-dialog
       .modal-content
@@ -24,6 +25,46 @@ block content
         .modal-footer
           button(type="button" class="btn btn-secondary" data-dismiss="modal") Close
           button(id="nameBtn" type="button" class="btn btn-primary" data-dismiss="modal") Submit
+  //- Modal for mobile controls
+  .modal.fade(id="keyboardModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel")
+    .modal-dialog(role="document" id="keyboardModalDialog")
+      .modal-content
+        .modal-header
+          button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+            span(aria-hidden="true") &times;
+        .modal-body
+          table(id="keyboardTable" style="margin-left:auto;margin-right:auto;")
+            tbody
+              tr
+                th
+                  .d-flex.justify-content-center
+                    button(id="upLeftKey") ↖
+                th
+                  .d-flex.justify-content-center
+                    button(id="upKey") ↑
+                th
+                  .d-flex.justify-content-center
+                    button(id="upRightKey") ↗
+              tr
+                th
+                  .d-flex.justify-content-center
+                    button(id="leftKey") ←
+                th
+                  .d-flex.justify-content-center
+                    button ☼
+                th
+                  .d-flex.justify-content-center
+                    button(id="rightKey") →
+              tr
+                th
+                  .d-flex.justify-content-center
+                    button(id="downLeftKey") ↙
+                th
+                  .d-flex.justify-content-center
+                    button(id="downKey") ↓
+                th
+                  .d-flex.justify-content-center
+                    button(id="downRightKey") ↘
   table(id="content" style="margin-left:auto;margin-right:auto;")
     tbody
       tr
@@ -50,9 +91,12 @@ block content
               .input-group.mb-3
                 input(id="chatInput" type="text" class="form-control" style="width:100px; min-width:38%; max-width:100%;")
                 .input-group-append
-                  button(id="chatSubmit" type="button" class="btn btn-outline-secondary") Send
+                  button(id="chatSubmit" type="button" class="btn btn-outline") Send
       tr
         th
+          .justify-content-center
+            .card
+              button(id="keyboard" type="button" class="btn btn-secondary").text-center Mobile Keyboard
         th
           .justify-content-center 
             .card
