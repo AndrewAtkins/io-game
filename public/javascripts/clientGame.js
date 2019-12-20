@@ -1,5 +1,6 @@
 var socket = io();
 // object for players movement
+let myX, myY, moveX, moveY, touching;
 var defaultMovement = {
   up: false,
   down: false,
@@ -217,6 +218,41 @@ let createNewPlayer = function () {
 }
 // send input 60 times a second
 setInterval(function () {
+  if (moveX && moveY) {
+    // console.log("MyX: " + myX + " MyY: " + myY + " MoveX:" + moveX + " MoveY: " + moveY);
+    if (Math.abs(myY - moveY) > 5) {
+      
+      if ((myY - moveY) > 0) { // where I am minus where I touched
+        movement.up = true;
+        movement.down = false;
+      }  else if ((myY - moveY) < 0) {
+        movement.down = true;
+        movement.up = false;
+      }
+    } else {
+      moveY = myY;
+      movement.up = false;
+      movement.down = false;
+    }
+    if (Math.abs(myX - moveX) > 5) {
+      
+      if ((myX - moveX) > 0) { // where I am minus where I touched
+        movement.left = true;
+        movement.right = false;
+      }  else if ((myX - moveX) < 0) {
+        movement.right = true;
+        movement.left = false;
+      }
+    } else {
+      moveX = myX;
+      movement.right = false;
+      movement.left = false;
+    }
+    // else {
+    //   movement.right = false;
+    //   movement.left = false;
+    // }
+  }
   socket.emit('movement', movement);
   movement = defaultMovement;
 }, 1000 / 60);
@@ -226,6 +262,64 @@ var canvas = document.getElementById('canvas');
 canvas.width = 800;
 canvas.height = 600;
 var context = canvas.getContext('2d');
+/* Adding touch controls to canvas */
+// let touching = false;
+
+// function touchHandler(e) {
+//   if(e.touches) {
+//       playerX = e.touches[0].pageX;
+//       playerY = e.touches[0].pageY;
+//       // output.innerHTML = "Touch: "+ " x: " + playerX + ", y: " + playerY;
+//       console.log("Touch: "+ " x: " + playerX + ", y: " + playerY);
+//       e.preventDefault();
+//   }
+// }
+let touchDown = (e) => {
+  if (e.touches) {
+    // moveX = e.touches[0].pageX - canvas.offsetLeft;
+    // moveY = e.touches[0].pageY - canvas.offsetTop;
+    // output.innerHTML = "Touch: "+ " x: " + playerX + ", y: " + playerY;
+    // console.log("Touch: " + " x: " + moveX + ", y: " + moveY);
+    var totalOffsetX = 0;
+    var totalOffsetY = 0;
+    moveX = 0;
+    moveY = 0;
+    var currentElement = canvas;
+
+    do{
+        totalOffsetX += currentElement.offsetLeft - currentElement.scrollLeft;
+        totalOffsetY += currentElement.offsetTop - currentElement.scrollTop;
+    }
+    while(currentElement = currentElement.offsetParent)
+
+    moveX = e.touches[0].pageX - totalOffsetX;
+    moveY = e.touches[0].pageY - totalOffsetY;
+    console.log("Touch: " + " x: " + moveX + ", y: " + moveY);
+    e.preventDefault();
+  }
+}
+// let touchUp = (e) => {
+//   setAllMovementsFalse();
+// }
+canvas.addEventListener("touchstart", touchDown);
+// canvas.addEventListener("touchend", touchUp);
+canvas.addEventListener("touchmove", touchDown);
+// setInterval(function() {
+//   if(touching) {
+//     if(moveX && moveY && myX && myY) {
+//       if(moveX > myX) {
+//         movement.right = true;
+//       } else if(moveX < myX) {
+//         movement.left = true;
+//       }
+//       if(moveY > myY) {
+//         movement.down = true;
+//       } else if (moveY < myY) {
+//         movement.up = true;
+//       }
+//     }
+//   }
+// }, 100);
 socket.on('state', function (state) {
   let players = state.players;
   let questions = state.questions;
@@ -274,7 +368,9 @@ socket.on('state', function (state) {
     }
   }
   // display the users score
-  if (players[socket.io.engine.id]) {
+  if (players[socket.io.engine.id]) { // this if statement checks for your own player
+    myX = players[socket.io.engine.id].x;
+    myY = players[socket.io.engine.id].y;
     context.font = "50px Arial";
     context.textAlign = "center";
     let scoreText = "" + players[socket.io.engine.id].score;
