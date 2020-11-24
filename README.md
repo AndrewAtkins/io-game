@@ -1,4 +1,4 @@
-# Skeleton template
+# Roshamio
 
 ### Note
-You need to modify the package.json with **your** contact info, description, etc.
+Roshamio is publicly available at http://roshamio.herokuapp.com/ 
